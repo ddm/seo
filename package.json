@@ -1,0 +1,15 @@
+{
+  "name": "seo",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "",
+    "underscore": "",
+    "request": "",
+    "xml2js": "",
+    "async": ""
+  }
+}
