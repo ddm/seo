@@ -6,7 +6,7 @@ var recommend = require('./keyword-recommendations');
 
 var app = express();
 
-var enableCors = function (req, res, next) {
+function enableCors (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Accept, Origin, Referer, User-Agent, Content-Type, Authorization');
@@ -15,11 +15,22 @@ var enableCors = function (req, res, next) {
   } else {
     next();
   }
-};
+}
+
+function cacheControl (req, res, next) {
+  var maxAgeInSeconds = 3600;
+  var now = new Date();
+  var expiringDate = new Date(now.getTime() + maxAgeInSeconds*1000);
+  res.setHeader('Expires', expiringDate.toUTCString());
+  res.setHeader('Cache-Control', "public; no-transform; max-age=" + maxAgeInSeconds + "; max-stale=" + 2*maxAgeInSeconds + ";");
+  res.setHeader('Vary', 'Accept-Encoding; Accept-Language');
+  next();
+}
 
 app.set('port', process.env.PORT || 3000);
 app.use(express.logger('dev'));
 app.use(enableCors);
+app.use(cacheControl);
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
