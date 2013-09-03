@@ -23,7 +23,6 @@ function cacheControl (req, res, next) {
   var expiringDate = new Date(now.getTime() + maxAgeInSeconds*1000);
   res.setHeader('Expires', expiringDate.toUTCString());
   res.setHeader('Cache-Control', "public; no-transform; max-age=" + maxAgeInSeconds + "; max-stale=" + 2*maxAgeInSeconds + ";");
-  res.setHeader('Vary', 'Accept-Encoding; Accept-Language');
   next();
 }
 
