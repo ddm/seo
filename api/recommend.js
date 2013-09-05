@@ -2,7 +2,7 @@ var _ = require('underscore');
 var async = require('async');
 var request = require('request');
 var parseString = require('xml2js').parseString;
-var suggest = require('./google-suggestions');
+var suggest = require('./suggest');
 
 function getRecommendations (keyword, callback) {
   suggest(keyword, function (suggestions) {
